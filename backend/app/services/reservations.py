@@ -1,6 +1,9 @@
 from datetime import datetime
 from decimal import Decimal
 from typing import Dict, Any, List
+import logging
+
+logger = logging.getLogger(__name__)
 
 async def calculate_monthly_revenue(property_id: str, month: int, year: int, db_session=None) -> Decimal:
     """
@@ -86,7 +89,7 @@ async def calculate_total_revenue(property_id: str, tenant_id: str) -> Dict[str,
             raise Exception("Database pool not available")
             
     except Exception as e:
-        print(f"Database error for {property_id} (tenant: {tenant_id}): {e}")
+        logger.error(f"Database error for {property_id} (tenant: {tenant_id}): {type(e).__name__}: {e}")
         
         # Create property-specific mock data for testing when DB is unavailable
         # This ensures each property shows different figures
